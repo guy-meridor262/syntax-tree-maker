@@ -1,0 +1,58 @@
+.selection-bar {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 12;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px 8px 14px;
+  border-radius: 999px;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  animation: sel-in 220ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.selection-count {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 550;
+  color: var(--ui-muted);
+  padding-right: 4px;
+}
+
+.sel-btn {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 550;
+  border: none;
+  border-radius: 999px;
+  padding: 7px 12px;
+  cursor: pointer;
+  background: var(--ghost);
+  color: var(--ui-text);
+}
+
+.sel-btn.primary {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+.sel-btn.danger:hover {
+  background: color-mix(in srgb, #b91c1c 14%, transparent);
+  color: #b91c1c;
+}
+
+@keyframes sel-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}

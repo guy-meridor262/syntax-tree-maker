@@ -1,0 +1,126 @@
+.tree-canvas {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+}
+
+.tree-canvas.panning {
+  cursor: grab;
+}
+
+.tree-canvas.wiring {
+  cursor: crosshair;
+}
+
+.grid-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  opacity: 0.9;
+}
+
+.tree-svg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: visible;
+}
+
+.branch {
+  transition: stroke 120ms ease;
+  pointer-events: none;
+}
+
+.branch.hot {
+  filter: drop-shadow(0 0 3px color-mix(in srgb, var(--select) 50%, transparent));
+}
+
+.branch-tri {
+  pointer-events: none;
+}
+
+.edge-insert {
+  pointer-events: auto;
+  cursor: copy;
+}
+
+.wire-preview {
+  pointer-events: none;
+}
+
+.wire-handle {
+  pointer-events: auto;
+  cursor: crosshair;
+}
+
+.tree-node.wire-target > rect:first-of-type {
+  animation: pulse 700ms ease-in-out infinite;
+}
+
+.node-editor {
+  position: absolute;
+  z-index: 5;
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: 2px solid var(--select);
+  outline-offset: 2px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--canvas, #fff) 92%, transparent);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.empty-hint {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  transform: translate(-50%, -50%);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.95rem;
+  color: var(--ui-muted);
+  pointer-events: none;
+  animation: fade-hint 1.2s ease both;
+}
+
+.wire-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 72px;
+  transform: translateX(-50%);
+  z-index: 6;
+  pointer-events: none;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 550;
+  color: var(--ui-text);
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 999px;
+  padding: 7px 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+@keyframes fade-hint {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.85;
+  }
+}

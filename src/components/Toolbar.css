@@ -1,0 +1,125 @@
+.toolbar {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 12;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  border-radius: 14px;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  max-width: calc(100vw - 24px);
+  overflow-x: auto;
+  animation: bar-in 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.toolbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 8px 0 4px;
+  margin-right: 4px;
+  border-right: 1px solid var(--panel-border);
+}
+
+.brand-mark {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
+.brand-name {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ui-text);
+  white-space: nowrap;
+}
+
+.toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.icon-btn {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 550;
+  letter-spacing: 0.01em;
+  color: var(--ui-text);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 7px 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background 140ms ease,
+    border-color 140ms ease,
+    color 140ms ease,
+    transform 140ms ease;
+}
+
+.icon-btn:hover:not(:disabled) {
+  background: var(--ghost);
+}
+
+.icon-btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.icon-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.icon-btn.active {
+  background: var(--select-soft);
+  border-color: color-mix(in srgb, var(--select) 35%, transparent);
+  color: var(--select);
+}
+
+.icon-btn.accent {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+.icon-btn.accent:hover:not(:disabled) {
+  filter: brightness(1.06);
+  background: var(--accent);
+}
+
+.icon-btn.accent:disabled {
+  filter: none;
+}
+
+.icon-btn.danger:hover:not(:disabled) {
+  background: color-mix(in srgb, #b91c1c 12%, transparent);
+  color: #b91c1c;
+}
+
+@keyframes bar-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@media (max-width: 720px) {
+  .brand-name {
+    display: none;
+  }
+}

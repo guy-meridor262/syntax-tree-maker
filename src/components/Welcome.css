@@ -1,0 +1,75 @@
+.welcome {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(ellipse at 18% 10%, rgba(31, 77, 70, 0.12), transparent 42%),
+    radial-gradient(ellipse at 88% 90%, rgba(180, 100, 40, 0.1), transparent 40%),
+    var(--canvas);
+  animation: welcome-in 480ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.welcome-card {
+  max-width: 420px;
+  text-align: left;
+}
+
+.welcome-brand {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(2.4rem, 6vw, 3.4rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--accent);
+  margin: 0 0 18px;
+  animation: rise 600ms cubic-bezier(0.22, 1, 0.36, 1) 60ms both;
+}
+
+.welcome-title {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--ui-text);
+  margin: 0 0 10px;
+  animation: rise 600ms cubic-bezier(0.22, 1, 0.36, 1) 120ms both;
+}
+
+.welcome-sub {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--ui-muted);
+  margin: 0 0 28px;
+  max-width: 36ch;
+  animation: rise 600ms cubic-bezier(0.22, 1, 0.36, 1) 180ms both;
+}
+
+.welcome-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: rise 600ms cubic-bezier(0.22, 1, 0.36, 1) 240ms both;
+}
+
+@keyframes welcome-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

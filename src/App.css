@@ -1,0 +1,54 @@
+.app {
+  min-height: 100vh;
+  background: var(--canvas);
+  color: var(--ui-text);
+}
+
+.canvas-shell {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--canvas-texture), var(--canvas);
+}
+
+.btn {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.92rem;
+  font-weight: 550;
+  padding: 11px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--panel-border);
+  background: var(--panel);
+  color: var(--ui-text);
+  cursor: pointer;
+  text-align: left;
+  transition:
+    transform 140ms ease,
+    background 140ms ease,
+    border-color 140ms ease;
+}
+
+.btn:hover {
+  background: color-mix(in srgb, var(--panel) 70%, var(--ghost));
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn.primary {
+  background: var(--accent);
+  color: var(--accent-text);
+  border-color: transparent;
+}
+
+.btn.primary:hover {
+  filter: brightness(1.05);
+  background: var(--accent);
+}
+
+.btn.ghost {
+  background: transparent;
+  color: var(--ui-muted);
+}
