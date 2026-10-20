@@ -11,7 +11,7 @@ export function HelpPanel({ open }: Props) {
     <aside className="help-panel" aria-label="Shortcuts">
       <div className="help-header">
         <h2>How to build</h2>
-        <span className="help-version">v0.2.2</span>
+        <span className="help-version">v0.2.3</span>
       </div>
       <ul>
         <li>
@@ -39,6 +39,9 @@ export function HelpPanel({ open }: Props) {
           <kbd>⌘Z</kbd> / <kbd>⌘⇧Z</kbd> → undo / redo
         </li>
         <li>Double-click a label (or press <kbd>E</kbd>) to rename</li>
+        <li>
+          Subscript: type <kbd>DP_i</kbd> or <kbd>{'t_{1}'}</kbd>
+        </li>
       </ul>
     </aside>
   )

@@ -15,6 +15,7 @@ import {
   nodeBounds,
   trianglePoints,
 } from '../lib/geometry'
+import { parseLabel, subDy, subFontSize } from '../lib/label'
 import './TreeCanvas.css'
 
 type Mode =
@@ -714,21 +715,16 @@ export function TreeCanvas({
                   fill={empty && !editing ? theme.ghost : 'rgba(0,0,0,0.001)'}
                 />
                 {!editing && (
-                  <text
+                  <NodeLabel
+                    label={empty ? '?' : node.label}
                     x={b.w / 2}
                     y={b.h / 2}
-                    textAnchor="middle"
-                    dominantBaseline="central"
-                    fill={empty ? theme.inkMuted : theme.ink}
-                    fontFamily={font.stack}
                     fontSize={style.fontSize}
-                    fontStyle={italic && !empty ? 'italic' : 'normal'}
-                    fontWeight={terminal || empty ? 400 : 600}
-                    style={{ userSelect: 'none' }}
-                    pointerEvents="none"
-                  >
-                    {empty ? '?' : node.label}
-                  </text>
+                    fontStack={font.stack}
+                    fill={empty ? theme.inkMuted : theme.ink}
+                    italic={italic && !empty}
+                    weight={terminal || empty ? 400 : 600}
+                  />
                 )}
               </g>
             )
@@ -806,6 +802,52 @@ export function TreeCanvas({
         </div>
       )}
     </div>
+  )
+}
+
+function NodeLabel({
+  label,
+  x,
+  y,
+  fontSize,
+  fontStack,
+  fill,
+  italic,
+  weight,
+}: {
+  label: string
+  x: number
+  y: number
+  fontSize: number
+  fontStack: string
+  fill: string
+  italic: boolean
+  weight: number
+}) {
+  const { base, sub } = parseLabel(label)
+  const baseText = base || (sub ? '' : label || '?')
+
+  return (
+    <text
+      x={x}
+      y={y}
+      textAnchor="middle"
+      dominantBaseline="central"
+      fill={fill}
+      fontFamily={fontStack}
+      fontSize={fontSize}
+      fontStyle={italic ? 'italic' : 'normal'}
+      fontWeight={weight}
+      style={{ userSelect: 'none' }}
+      pointerEvents="none"
+    >
+      <tspan>{baseText}</tspan>
+      {sub && (
+        <tspan fontSize={subFontSize(fontSize)} dy={subDy(fontSize)}>
+          {sub}
+        </tspan>
+      )}
+    </text>
   )
 }
 

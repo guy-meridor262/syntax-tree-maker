@@ -1,4 +1,5 @@
 import type { TreeEdge, TreeNode, TreeState } from '../types'
+import { parseLabel, subFontSize, subGap } from './label'
 
 export const NODE_PAD_X = 10
 export const NODE_PAD_Y = 6
@@ -10,20 +11,31 @@ export function measureLabel(
   fontSize: number,
   fontStack: string,
 ): { width: number; height: number } {
+  const { base, sub } = parseLabel(label)
+  const baseText = base || (sub ? '' : '?')
   const canvas = measureLabel._canvas ?? document.createElement('canvas')
   measureLabel._canvas = canvas
   const ctx = canvas.getContext('2d')
   if (!ctx) {
+    const approx =
+      (baseText.length + (sub?.length ?? 0) * 0.65) * fontSize * 0.55
     return {
-      width: Math.max(MIN_NODE_W, label.length * fontSize * 0.55 + NODE_PAD_X * 2),
-      height: fontSize + NODE_PAD_Y * 2,
+      width: Math.max(MIN_NODE_W, approx + NODE_PAD_X * 2),
+      height: Math.max(NODE_H, fontSize + NODE_PAD_Y * 2 + (sub ? fontSize * 0.12 : 0)),
     }
   }
   ctx.font = `600 ${fontSize}px ${fontStack}`
-  const metrics = ctx.measureText(label.trim() ? label : '?')
+  let width = ctx.measureText(baseText || (sub ? '' : '?')).width
+  if (sub) {
+    ctx.font = `600 ${subFontSize(fontSize)}px ${fontStack}`
+    width += subGap(fontSize) + ctx.measureText(sub).width
+  }
   return {
-    width: Math.max(MIN_NODE_W, Math.ceil(metrics.width) + NODE_PAD_X * 2),
-    height: Math.max(NODE_H, fontSize + NODE_PAD_Y * 2),
+    width: Math.max(MIN_NODE_W, Math.ceil(width) + NODE_PAD_X * 2),
+    height: Math.max(
+      NODE_H,
+      fontSize + NODE_PAD_Y * 2 + (sub ? fontSize * 0.12 : 0),
+    ),
   }
 }
 measureLabel._canvas = null as HTMLCanvasElement | null

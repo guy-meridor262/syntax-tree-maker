@@ -1,6 +1,7 @@
 import type { StyleSettings, TreeState } from '../types'
 import { FONTS, THEMES } from '../types'
 import { edgePath, isTerminal, leafYield, nodeBounds, trianglePoints } from './geometry'
+import { parseLabel, subDy, subFontSize } from './label'
 
 export function buildExportSvg(
   tree: TreeState,
@@ -74,9 +75,13 @@ export function buildExportSvg(
     const terminal = isTerminal(tree, n.id)
     const italic = style.italicTerminals && terminal ? 'italic' : 'normal'
     const weight = terminal ? 400 : 600
-    const label = escapeXml(n.label)
+    const { base, sub } = parseLabel(n.label)
+    const baseText = escapeXml(base || (sub ? '' : n.label || '?'))
+    const subText = sub
+      ? `<tspan font-size="${subFontSize(style.fontSize)}" dy="${subDy(style.fontSize)}">${escapeXml(sub)}</tspan>`
+      : ''
     parts.push(
-      `<text x="${b.cx + ox}" y="${b.cy + oy}" text-anchor="middle" dominant-baseline="central" fill="${theme.ink}" font-family="${escapeXml(font.family)}" font-size="${style.fontSize}" font-style="${italic}" font-weight="${weight}">${label}</text>`,
+      `<text x="${b.cx + ox}" y="${b.cy + oy}" text-anchor="middle" dominant-baseline="central" fill="${theme.ink}" font-family="${escapeXml(font.family)}" font-size="${style.fontSize}" font-style="${italic}" font-weight="${weight}"><tspan>${baseText}</tspan>${subText}</text>`,
     )
   }
 
