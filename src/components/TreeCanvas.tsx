@@ -841,11 +841,17 @@ function NodeLabel({
       style={{ userSelect: 'none' }}
       pointerEvents="none"
     >
-      <tspan>{baseText}</tspan>
-      {sub && (
-        <tspan fontSize={subFontSize(fontSize)} dy={subDy(fontSize)}>
-          {sub}
-        </tspan>
+      {/* Keep plain text when there's no subscript — a lone <tspan> can
+          change baseline handling and leave a gap above the branch. */}
+      {sub ? (
+        <>
+          <tspan>{baseText}</tspan>
+          <tspan fontSize={subFontSize(fontSize)} dy={subDy(fontSize)}>
+            {sub}
+          </tspan>
+        </>
+      ) : (
+        baseText
       )}
     </text>
   )

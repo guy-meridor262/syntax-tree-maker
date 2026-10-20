@@ -16,12 +16,15 @@ export function measureLabel(
   const canvas = measureLabel._canvas ?? document.createElement('canvas')
   measureLabel._canvas = canvas
   const ctx = canvas.getContext('2d')
+  // Height stays base-label sized so branches still hug the node; subscripts
+  // hang into the existing vertical padding instead of pushing the box down.
+  const height = Math.max(NODE_H, fontSize + NODE_PAD_Y * 2)
   if (!ctx) {
     const approx =
       (baseText.length + (sub?.length ?? 0) * 0.65) * fontSize * 0.55
     return {
       width: Math.max(MIN_NODE_W, approx + NODE_PAD_X * 2),
-      height: Math.max(NODE_H, fontSize + NODE_PAD_Y * 2 + (sub ? fontSize * 0.12 : 0)),
+      height,
     }
   }
   ctx.font = `600 ${fontSize}px ${fontStack}`
@@ -32,10 +35,7 @@ export function measureLabel(
   }
   return {
     width: Math.max(MIN_NODE_W, Math.ceil(width) + NODE_PAD_X * 2),
-    height: Math.max(
-      NODE_H,
-      fontSize + NODE_PAD_Y * 2 + (sub ? fontSize * 0.12 : 0),
-    ),
+    height,
   }
 }
 measureLabel._canvas = null as HTMLCanvasElement | null

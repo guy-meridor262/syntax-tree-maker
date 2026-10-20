@@ -77,11 +77,11 @@ export function buildExportSvg(
     const weight = terminal ? 400 : 600
     const { base, sub } = parseLabel(n.label)
     const baseText = escapeXml(base || (sub ? '' : n.label || '?'))
-    const subText = sub
-      ? `<tspan font-size="${subFontSize(style.fontSize)}" dy="${subDy(style.fontSize)}">${escapeXml(sub)}</tspan>`
-      : ''
+    const labelMarkup = sub
+      ? `<tspan>${baseText}</tspan><tspan font-size="${subFontSize(style.fontSize)}" dy="${subDy(style.fontSize)}">${escapeXml(sub)}</tspan>`
+      : baseText
     parts.push(
-      `<text x="${b.cx + ox}" y="${b.cy + oy}" text-anchor="middle" dominant-baseline="central" fill="${theme.ink}" font-family="${escapeXml(font.family)}" font-size="${style.fontSize}" font-style="${italic}" font-weight="${weight}"><tspan>${baseText}</tspan>${subText}</text>`,
+      `<text x="${b.cx + ox}" y="${b.cy + oy}" text-anchor="middle" dominant-baseline="central" fill="${theme.ink}" font-family="${escapeXml(font.family)}" font-size="${style.fontSize}" font-style="${italic}" font-weight="${weight}">${labelMarkup}</text>`,
     )
   }
 
